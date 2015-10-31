@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Lab3</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="login">login</string>
+    <string name="about">about</string>
+    <string name="intro">Lab 3 creation: Learning to handle events!</string>
+    <string name="title_activity_about">about</string>
+    <string name="title_activity_login">login</string>
+    <string name="pass">Password</string>
+    <string name="username">Username</string>
+    <string name="aboutStmt">this is the about page</string>
+    <string name="finish">finish</string>
+</resources>

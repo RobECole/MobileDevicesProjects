@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Lab5</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="body">Interesting things about a company!</string>
+    <string name="About">About</string>
+    <string name="agreement"><u>License Agreement</u></string>
+    <string name="title_activity_show_license">ShowLicense</string>
+    <string name="close">Close</string>
+</resources>

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MidtermExam</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="urlLabel">URL:</string>
+    <string name="showfeed">Show Feed</string>
+    <string name="title_activity_show_feed">ShowFeedActivity</string>
+    <string name="defaultUrl">http://www.theregister.co.uk/software/os/headlines.atom</string>
+</resources>

@@ -23,13 +23,9 @@ public class ShowGrades extends AppCompatActivity {
     @Override
     protected  void onStart(){
         super.onStart();
-        try{
-            gradeList = dbHelper.getAllGrades();
-        }catch (Exception e){
-
-        }
-
-    }
+        
+        gradeList = dbHelper.getAllGrades();
+  
 
     @Override
     protected void onStop(){

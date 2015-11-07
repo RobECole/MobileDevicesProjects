@@ -67,29 +67,6 @@ public class ProductDBHelper extends SQLiteOpenHelper {
         return product;
     }
 
-    public Product getProduct(int id) {
-        Product product = null;
-
-        // obtain a database connection
-        SQLiteDatabase database = this.getWritableDatabase();
-
-        // retrieve the contact from the database
-        String[] columns = new String[] { "_productId", "name", "description", "price" };
-        Cursor cursor = database.query(TABLE_NAME, columns, "_productId = ?", new String[] { "" + id }, "", "", "");
-        if (cursor.getCount() >= 1) {
-            cursor.moveToFirst();
-            int productId = cursor.getInt(0);
-            String name = cursor.getString(1);
-            String desc = cursor.getString(2);
-            float mark = cursor.getFloat(3);
-            product = new Product(productId, name, desc, mark);
-        }
-
-        Log.i("DatabaseAccess", "getProduct(" + id + "):  product: " + product);
-
-        return product;
-    }
-
     public ArrayList<Product> getAllProducts() {
         ArrayList<Product> products = new ArrayList<>();
 
@@ -123,23 +100,6 @@ public class ProductDBHelper extends SQLiteOpenHelper {
 
 
         return products;
-    }
-    public boolean updateProduct(Product product) {
-        // obtain a database connection
-        SQLiteDatabase database = this.getWritableDatabase();
-
-        // update the data in the database
-        ContentValues values = new ContentValues();
-        values.put("_productId", product.getProductId());
-        values.put("name", product.getName());
-        values.put("description", product.getDescription());
-        values.put("price", product.getPrice());
-        int numRowsAffected = database.update(TABLE_NAME, values, "_productId = ?", new String[] { "" + product.getProductId() });
-
-        Log.i("DatabaseAccess", "updateContact(" + product + "):  numRowsAffected: " + numRowsAffected);
-
-        // verify that the contact was updated successfully
-        return (numRowsAffected == 1);
     }
 
     public boolean deleteProduct(int id) {

@@ -88,16 +88,13 @@ public class BrowseProductsActivity extends AppCompatActivity implements listene
             pointer++;
             Product p = productList.get(pointer);
             showProduct(p);
-
-            if (pointer==productList.size()-1){
-                next.setClickable(false);
-            }
-            if (pointer == 1){
-                prev.setClickable(true);
-            }
         }
-
-
+        if (pointer==productList.size()-1){
+            next.setClickable(false);
+        }
+        if (pointer == 1){
+            prev.setClickable(true);
+        }
     }
 
     public void delete(View view) {
@@ -118,12 +115,12 @@ public class BrowseProductsActivity extends AppCompatActivity implements listene
             pointer--;
             Product p = productList.get(pointer);
             showProduct(p);
-            if (pointer==0){
-                prev.setClickable(false);
-            }
-            if (pointer==productList.size()-2){
-                next.setClickable(true);
-            }
+        }
+        if (pointer==0){
+            prev.setClickable(false);
+        }
+        if (pointer==productList.size()-2){
+            next.setClickable(true);
         }
     }
 
@@ -131,7 +128,6 @@ public class BrowseProductsActivity extends AppCompatActivity implements listene
         EditText n = (EditText)findViewById(R.id.nameField);
         EditText d = (EditText)findViewById(R.id.descripField);
         EditText pr = (EditText)findViewById(R.id.priceField);
-        EditText prb = (EditText)findViewById(R.id.btcField);
 
         float price = p.getPrice();
 
@@ -154,7 +150,9 @@ public class BrowseProductsActivity extends AppCompatActivity implements listene
     public void onActivityResult(int requestCode, int responseCode, Intent resultIntent){
         super.onActivityResult(requestCode, responseCode, resultIntent);
 
-        productList = dbHelper.getAllProducts();
+        productList = new ArrayList<>(dbHelper.getAllProducts());
+        next.setClickable(true);
         showProduct(productList.get(pointer));
+
     }
 }

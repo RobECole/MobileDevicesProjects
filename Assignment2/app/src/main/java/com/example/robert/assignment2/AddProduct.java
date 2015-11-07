@@ -64,6 +64,7 @@ public class AddProduct extends AppCompatActivity {
 
         //put in db return to main
         dbHelper.createProduct(rnd.nextInt(10000),name,descrip,price);
+
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();

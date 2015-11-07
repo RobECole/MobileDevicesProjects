@@ -62,6 +62,8 @@ public class ProductDBHelper extends SQLiteOpenHelper {
         values.put("description", product.getDescription());
         values.put("price", product.getPrice());
 
+        database.insert(TABLE_NAME, null, values);
+
         return product;
     }
 
@@ -97,23 +99,28 @@ public class ProductDBHelper extends SQLiteOpenHelper {
         // retrieve the contact from the database
         String[] columns = new String[] { "_productId", "name", "description", "price" };
         Cursor cursor = database.query(TABLE_NAME, columns, "", new String[]{}, "", "", "");
-        cursor.moveToFirst();
-        do {
-            // collect the contact data, and place it into a contact object
-            int productId = cursor.getInt(0);
-            String name = cursor.getString(1);
-            String desc = cursor.getString(2);
-            float price = cursor.getFloat(3);
+        try {
+            cursor.moveToFirst();
+            do {
+                // collect the contact data, and place it into a contact object
+                int _productId = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String description = cursor.getString(2);
+                float mark = cursor.getFloat(3);
 
-            Product product = new Product(productId, name, desc, price);
-            // add the current contact to the list
-            products.add(product);
+                Product  product = new Product(_productId, name, description, mark);
+                // add the current contact to the list
+                products.add(product);
 
-            // advance to the next row in the results
-            cursor.moveToNext();
-        } while (!cursor.isAfterLast());
+                // advance to the next row in the results
+                cursor.moveToNext();
+            } while (!cursor.isAfterLast());
 
-        Log.i("DatabaseAccess", "getAllContacts():  num: " + products.size());
+            Log.i("DatabaseAccess", "getAllProducts():  num: " + products.size());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
 
         return products;
     }

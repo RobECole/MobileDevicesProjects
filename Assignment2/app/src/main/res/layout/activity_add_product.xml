@@ -3,43 +3,8 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".BrowseProductsActivity">
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/prev"
-        android:id="@+id/prev"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:onClick="prev"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/del"
-        android:id="@+id/delete"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="delete"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
-        android:id="@+id/next"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="next"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add"
-        android:id="@+id/add"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="addProduct"/>
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.robert.assignment2.AddProduct">
 
     <TextView
         android:layout_width="wrap_content"
@@ -47,7 +12,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/name"
         android:id="@+id/name"
-        android:layout_below="@+id/add"
+        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="30dp"/>
 
@@ -71,20 +36,9 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="30dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/pricebtc"
-        android:id="@+id/btc"
-        android:layout_below="@+id/price"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp" />
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:editable="false"
         android:id="@+id/nameField"
         android:layout_alignBottom="@+id/name"
         android:layout_toEndOf="@+id/name" />
@@ -92,7 +46,6 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:editable="false"
         android:id="@+id/descripField"
         android:layout_alignBottom="@+id/descrip"
         android:layout_toEndOf="@+id/descrip" />
@@ -100,17 +53,27 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:editable="false"
+        android:inputType="phone"
         android:id="@+id/priceField"
         android:layout_alignBottom="@+id/price"
         android:layout_toEndOf="@+id/price" />
 
-    <EditText
-        android:layout_width="match_parent"
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:editable="false"
-        android:id="@+id/btcField"
-        android:layout_alignBottom="@+id/btc"
-        android:layout_toEndOf="@+id/descrip" />
+        android:text="@string/save"
+        android:id="@+id/add"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:onClick="saveProduct"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:id="@+id/cancel"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="cancel"/>
 
 </RelativeLayout>

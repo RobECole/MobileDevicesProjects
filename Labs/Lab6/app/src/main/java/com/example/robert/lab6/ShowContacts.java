@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -20,76 +21,48 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
-public class ShowContacts extends AppCompatActivity implements OnClickListener {
-    public static int DATA = 2;
+public class ShowContacts extends AppCompatActivity {
+    public static int ADD = 1;
+    public static int DEL = 2;
+    public static String filename = "contacts.txt";
     public ArrayAdapter<Contact> adapter;
     static ArrayList<Contact> contactList = new ArrayList<Contact>();
 
     ListView lv;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_show_contacts);
+        lv = (ListView)findViewById(R.id.listView);
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,contactList);
+        lv.setAdapter(adapter);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
-
-         try {
-            InputStream inputStream = openFileInput("contactData.txt");
-
-            if (inputStream != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                boolean contains;
-                while ((receiveString = bufferedReader.readLine()) != null) {
-                    Scanner scanner = new Scanner(receiveString);
-                    int id = scanner.nextInt();
-                    contains = false;
-                }
+        if(contactList.isEmpty()){
+            try {
+                contactList = readFromFile();
+            } catch (Exception e) {
+                Log.e("login activity", "File not found: " + e.toString());
             }
-        } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
         }
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,contactList);
+        lv.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onStop(){
         super.onStop();
-        try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput("contactData.txt", Context.MODE_PRIVATE));
-            for(int i = 0; i < contactList.size(); i++) {
-                Contact contact = contactList.get(i);
-                String contactData = contact.id + " " + contact.fn + " " + contact.ln + " " + contact.phone + "\n";
-                outputStreamWriter.write(contactData);
-            }
-            outputStreamWriter.close();
-        }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_contacts);
-        lv = (ListView)findViewById(R.id.listView);
-
-
-        adapter = new ArrayAdapter<Contact>(this,android.R.layout.simple_list_item_1,contactList);
-        lv.setAdapter(adapter);
-
-        Button add = (Button)findViewById(R.id.add);
-        Button remove = (Button)findViewById(R.id.remove);
-
-
-        add.setOnClickListener(this);
-        remove.setOnClickListener(this);
-
-
-
+        writeToFile(contactList);
     }
 
     @Override
@@ -115,38 +88,95 @@ public class ShowContacts extends AppCompatActivity implements OnClickListener {
     }
 
     @Override
-    public void onClick(View v) {
-        Intent intent;
-
-        if (v.getId() == R.id.add) {
-            intent = new Intent(this, AddContact.class);
-        }
-        else {
-            intent = new Intent(this, DeleteContact.class);
-        }
-        startActivityForResult(intent, DATA);
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int responseCode, Intent resultIntent){
         super.onActivityResult(requestCode, responseCode, resultIntent);
 
-        if (resultIntent.getIntExtra("act",0) == 1) {
-            Contact c = new Contact(contactList.size() + 1, resultIntent.getStringExtra("First"),
-                    resultIntent.getStringExtra("Last"), resultIntent.getStringExtra("phone"));
-            contactList.add(c);
-        }
-        else if (resultIntent.getIntExtra("act",0) == 2){
-            int id = Integer.parseInt(resultIntent.getStringExtra("id"));
-            int i = 0;
-            for( Contact c: contactList){
-                if (c.id == id){
-                    contactList.remove(i);
-                    break;
+        if(responseCode == RESULT_OK){
+            if (requestCode == ADD) {
+                Contact c = new Contact(contactList.size() + 1, resultIntent.getStringExtra("First"),
+                        resultIntent.getStringExtra("Last"), resultIntent.getStringExtra("phone"));
+                contactList.add(c);
+                Toast.makeText(getApplicationContext(), "Added " + resultIntent.getStringExtra("First") + " contact", Toast.LENGTH_SHORT).show();
+            }
+            else if (requestCode == DEL){
+                int id = Integer.parseInt(resultIntent.getStringExtra("id"));
+                int i = 0;
+                for( Contact c: contactList){
+                    if (c.id == id){
+                        Toast.makeText(getApplicationContext(), "Deleted " + contactList.get(i).toString() + " from contacts", Toast.LENGTH_SHORT).show();
+                        contactList.remove(i);
+                        break;
+                    }
+                    i++;
                 }
-                i++;
+
+            }
+            adapter.notifyDataSetChanged();
+        }
+        else{
+            if (requestCode == ADD) {
+                Toast.makeText(getApplicationContext(), "Failed to add contact", Toast.LENGTH_SHORT).show();
+            }
+            else if (requestCode == DEL){
+                Toast.makeText(getApplicationContext(), "Failed to delete contact", Toast.LENGTH_SHORT).show();
             }
         }
         adapter.notifyDataSetChanged();
+
+
+    }
+
+    //write contacts to text file
+    public void writeToFile(ArrayList<Contact> contacts){
+        //write semesters to text file
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(filename, Context.MODE_PRIVATE));
+            for(int i = 0; i < contacts.size(); i++) {
+                Contact contact = contacts.get(i);
+                outputStreamWriter.write(contact.toString());
+            }
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+    //read semesters from text file
+    public ArrayList<Contact> readFromFile(){
+        ArrayList<Contact> contacts = new ArrayList<>();
+        try {
+            InputStream inputStream = openFileInput(filename);
+
+            if (inputStream != null) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                while ((receiveString = bufferedReader.readLine()) != null) {
+                    Scanner scanner = new Scanner(receiveString);
+                    int i = scanner.nextInt();
+                    String first = scanner.next();
+                    String last = scanner.next();
+                    String phone = scanner.next();
+                    Contact contact = new Contact(i, first, last, phone);
+                    contacts.add(contact);
+                }
+            }
+            inputStream.close();
+        } catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+        return contacts;
+    }
+
+    public void delete(View view) {
+        Intent intent = new Intent(this, DeleteContact.class);
+        startActivityForResult(intent, DEL);
+    }
+
+    public void add(View view) {
+        Intent intent = new Intent(this, AddContact.class);
+        startActivityForResult(intent, ADD);
     }
 }

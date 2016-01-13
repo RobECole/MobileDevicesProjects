@@ -43,12 +43,14 @@ public class ShowLicense extends AppCompatActivity implements listener{
 
     @Override
     public void placeHolder(String string){
+        //Placeholder RMI. Displays string from URL when packed with string
         TextView txt = (TextView)findViewById(R.id.license);
         txt.setText(string);
         txt.setMovementMethod(new ScrollingMovementMethod());
     }
 
     public void close(View view) {
+        //return to main with success
         Intent intent = new Intent();
         setResult(RESULT_OK,intent);
         finish();

@@ -48,7 +48,6 @@ public class AddContact extends AppCompatActivity {
         results.putExtra("First", firstName.getText().toString());
         results.putExtra("Last", lastName.getText().toString());
         results.putExtra("phone", phone.getText().toString());
-        results.putExtra("act", 1);
         setResult(RESULT_OK,results);
         finish();
     }

@@ -10,24 +10,25 @@
         android:layout_height="wrap_content"
         android:text="@string/add"
         android:id="@+id/add"
+        android:onClick="add"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:onClick="add"/>
+        android:layout_alignEnd="@+id/listView" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/rmv"
         android:id="@+id/remove"
-        android:layout_alignBottom="@+id/add"
-        android:layout_alignParentEnd="true"
-        android:onClick="rmv"/>
+        android:onClick="rmv"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listView"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/add" />
 
 </RelativeLayout>

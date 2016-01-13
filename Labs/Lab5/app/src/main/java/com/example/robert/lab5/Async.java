@@ -8,10 +8,11 @@ import java.net.URL;
 
 /**
  * Created by Robert on 27-Oct-2015.
+ * Async reader, takes URL and returns string
  */
 public class Async extends AsyncTask <String, String, String> {
     private listener ls = null;
-    private String brown = "";
+    private String license = "";
 
     public Async(listener ls){
         this.ls = ls;
@@ -22,9 +23,9 @@ public class Async extends AsyncTask <String, String, String> {
         try {
             URL url = new URL(params[0]);
             BufferedReader brf = new BufferedReader(new InputStreamReader(url.openStream()));
-            String doc;
-            while((doc=brf.readLine())!=null){
-                brown = brown + doc + "\n";
+            String line;
+            while((line=brf.readLine())!=null){
+                license = license + line + "\n";
             }
             brf.close();
         }
@@ -32,12 +33,11 @@ public class Async extends AsyncTask <String, String, String> {
             e.printStackTrace();
         }
 
-
-        return brown;
+        return license;
     }
 
     @Override
     protected void onPostExecute(String result){
-        ls.placeHolder(brown);
+        ls.placeHolder(license);
     }
 }

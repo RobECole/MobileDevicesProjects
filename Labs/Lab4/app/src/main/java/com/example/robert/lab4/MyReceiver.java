@@ -21,6 +21,8 @@ public class MyReceiver extends BroadcastReceiver{
         int temp = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1);
 
         String healthStr, chargingStr, pluggedStr, tempStr;
+
+        //Setting strings based on BatteryManager
         if(health == BatteryManager.BATTERY_HEALTH_GOOD){
             healthStr = "Good";
         }
@@ -42,22 +44,25 @@ public class MyReceiver extends BroadcastReceiver{
             pluggedStr = "Unplugged";
         }
 
+        //clean information
         tempStr = (temp / 10) + " C";
-
         String text = "\nCharging: " + chargingStr + "\nHealth: " + healthStr +
                 "\nPlug: " + pluggedStr + "\nTemperature: " + tempStr;
 
+        //builder for notification
         Notification.Builder bob = new Notification.Builder(context)
                 .setContentTitle("Lab 4: Battery Status")
                 .setContentText(text)
                 .setSmallIcon(R.drawable.icon);
 
-        Notification noti = new Notification.BigTextStyle(bob)
+        //build notification
+        Notification notification = new Notification.BigTextStyle(bob)
                 .bigText(text)
                 .build();
 
-        NotificationManager manny = (NotificationManager)context.getSystemService(context.NOTIFICATION_SERVICE);
-        manny.notify(0,noti);
+        //set notificatoin
+        NotificationManager manager = (NotificationManager)context.getSystemService(context.NOTIFICATION_SERVICE);
+        manager.notify(0,notification);
 
     }
 

@@ -18,6 +18,6 @@ public class Contact {
 
     @Override
     public String toString(){
-        return (this.id + " | " + this.ln + ", " + this.fn+"\n" + this.phone);
+        return (this.id + " " + this.ln + " " + this.fn+ " " + this.phone);
     }
 }

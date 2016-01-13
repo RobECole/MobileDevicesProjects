@@ -40,7 +40,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/inputUsername"
         android:layout_alignBottom="@id/username"
-        android:layout_toEndOf="@+id/username" />
+        android:layout_toEndOf="@+id/username"
+        android:inputType="text"/>
 
     <EditText
         android:layout_width="fill_parent"

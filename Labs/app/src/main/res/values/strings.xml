@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Lab8</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="adr1">Address 1:</string>
+    <string name="adr2">Address 2:</string>
+    <string name="city">City :</string>
+    <string name="prov">Province :</string>
+    <string name="cntry">Country :</string>
+    <string name="pst">Postal Code :</string>
+    <string name="phon">Phone Number :</string>
+    <string name="url">URL :</string>
+    <string name="updt">Update</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="gooo">GOOO</string>
+</resources>

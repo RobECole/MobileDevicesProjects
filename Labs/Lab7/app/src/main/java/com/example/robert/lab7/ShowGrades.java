@@ -21,11 +21,11 @@ public class ShowGrades extends AppCompatActivity {
 
 
     @Override
-    protected  void onStart(){
+    protected  void onStart() {
         super.onStart();
-        
+
         gradeList = dbHelper.getAllGrades();
-  
+    }
 
     @Override
     protected void onStop(){

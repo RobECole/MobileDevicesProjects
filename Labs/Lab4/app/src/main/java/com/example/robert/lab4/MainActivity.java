@@ -14,6 +14,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //create and register receiver.
         MyReceiver R = new MyReceiver();
         this.registerReceiver(R,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
@@ -25,10 +26,4 @@ public class MainActivity extends Activity {
         return true;
     }
 
-
-    public void broadcastIntent(View view) {
-        Intent intent = new Intent();
-        intent.setAction("android.intent.action.BATTERY_CHANGED");
-        sendBroadcast(intent);
-    }
 }

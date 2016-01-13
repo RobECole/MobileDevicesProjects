@@ -61,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
                toast = Toast.makeText(getApplicationContext(),
                         "Login Correct",
                         Toast.LENGTH_SHORT);
-
-
             }
             else{
                 toast = Toast.makeText(getApplicationContext(),"Incorrect login", Toast.LENGTH_SHORT);
